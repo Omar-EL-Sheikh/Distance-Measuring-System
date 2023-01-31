@@ -1,0 +1,67 @@
+/*
+ * ultrasonic.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+
+/*******************************************************************************
+ *                                Inclusions                                   *
+ *******************************************************************************/
+#include "ultrasonic.h"
+#include "icu.h"
+#include "lcd.h"
+#include "common_macros.h"
+#include<util/delay.h>
+
+/*******************************************************************************
+ *                                Global Variables                                   *
+ *******************************************************************************/
+Icu_ConfigType ICU_Configs = {F_CPU_8, RISING};
+static boolean highEdge = FALSE;
+static boolean lowEdge = FALSE;
+uint16 captureTime;
+/*******************************************************************************
+ *                                Functions Definitions                                   *
+ *******************************************************************************/
+void Ultrasonic_edgeProcessing(void){
+	/*
+	if (highEdge == FALSE){
+		Icu_clearTimerValue();
+		 Detect falling edge
+		Icu_setEdgeDetectionType(FALLING);
+		highEdge = TRUE;
+		lowEdge = FALSE;
+	}
+	else {
+		captureTime = Icu_getInputCaptureValue();
+		Icu_clearTimerValue();
+		Icu_setEdgeDetectionType(RISING);
+		highEdge = FALSE;
+		lowEdge = TRUE;
+	}*/
+	LCD_displayString("HIGH !");
+	_delay_ms(500);
+}
+
+void Ultrasonic_init(void){
+	Icu_setCallBack(Ultrasonic_edgeProcessing);
+	Icu_init(&ICU_Configs);
+	GPIO_setupPinDirection (TRIGGER_PORT, TRIGGER_PIN, PIN_OUTPUT);
+}
+
+void Ultrasonic_Trigger(void){
+	GPIO_writePin(TRIGGER_PORT, TRIGGER_PIN, LOGIC_HIGH);
+	_delay_us(10);
+	GPIO_writePin(TRIGGER_PORT, TRIGGER_PIN, LOGIC_LOW);
+}
+
+uint16 Ultrasonic_readDistance(void){
+	uint16 distance;
+	Ultrasonic_Trigger();
+	//while(!lowEdge){}
+	if (lowEdge == TRUE){
+		distance = (float) captureTime / 58.8;
+		return distance;
+	}
+}

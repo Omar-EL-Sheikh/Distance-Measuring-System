@@ -1,0 +1,33 @@
+/*
+ * Application.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+#include "lcd.h"
+#include "ultrasonic.h"
+
+
+
+
+
+
+int main(void){
+	//Icu_ConfigType ICU_Configs = {F_CPU_8, RISING};
+	Ultrasonic_init();
+	LCD_init();
+	uint16 distance;
+	LCD_displayString("Distance= ");
+	while (1){
+		distance = Ultrasonic_readDistance();
+
+		LCD_moveCursor(0,10);
+		LCD_intgerToString(distance);
+		if (distance > 99){
+			LCD_displayString(" CM");
+		}
+		else {
+			LCD_displayString(" CM ");
+		}
+	}
+}

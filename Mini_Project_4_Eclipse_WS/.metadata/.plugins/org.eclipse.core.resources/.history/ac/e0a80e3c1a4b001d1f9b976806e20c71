@@ -1,0 +1,43 @@
+/*
+ * Application.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+#include "lcd.h"
+#include "ultrasonic.h"
+#include <util/delay.h>
+#include "icu.h"
+void Ultrasonic_edgeProcessing(void){
+	/*
+	if (highEdge == FALSE){
+		Icu_clearTimerValue();
+		 Detect falling edge
+		Icu_setEdgeDetectionType(FALLING);
+		highEdge = TRUE;
+		lowEdge = FALSE;
+	}
+	else {
+		captureTime = Icu_getInputCaptureValue();
+		Icu_clearTimerValue();
+		Icu_setEdgeDetectionType(RISING);
+		highEdge = FALSE;
+		lowEdge = TRUE;
+	}*/
+	GPIO_writePin(PORTC_ID, PIN0_ID, LOGIC_HIGH);
+	_delay_ms(500);
+	GPIO_writePin(PORTC_ID, PIN0_ID, LOGIC_LOW);
+}
+
+Icu_ConfigType ICU_Configs = {F_CPU_8, RISING};
+
+int main(void){
+	GPIO_setupPinDirection(PORTC_ID, PIN0_ID, PIN_OUTPUT);
+	GPIO_writePin(PORTC_ID, PIN0_ID, LOGIC_LOW);
+	Icu_setCallBack(Ultrasonic_edgeProcessing);
+	Icu_init(&ICU_Configs);
+	Ultrasonic_init();
+	while (1){
+		uint16 d = Ultrasonic_readDistance();
+	}
+}

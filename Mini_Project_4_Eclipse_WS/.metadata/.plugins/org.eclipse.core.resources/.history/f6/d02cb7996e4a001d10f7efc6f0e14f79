@@ -1,0 +1,25 @@
+/*
+ * Application.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+
+#include "lcd.h"
+#include "ultrasonic.h"
+#include <util/delay.h>
+
+int main (void){
+	LCD_init();
+	Ultrasonic_init();
+	uint16 distance = 0 ;
+	distance = Ultrasonic_readDistance();
+	while (1){
+		//distance = Ultrasonic_readDistance();
+		//_delay_ms(500);
+		//LCD_intgerToString(distance);
+		//_delay_ms(500);
+		uint16 distance = 0 ;
+		distance = Ultrasonic_readDistance();
+	}
+}

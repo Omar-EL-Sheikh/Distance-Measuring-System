@@ -1,0 +1,17 @@
+/*
+ * Application.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+#include "lcd.h"
+#include "ultrasonic.h"
+#include <util/delay.h>
+
+int main(void){
+	while (1){
+		GPIO_writePin(TRIGGER_PORT, TRIGGER_PIN, LOGIC_HIGH);
+		_delay_us(10);
+		GPIO_writePin(TRIGGER_PORT, TRIGGER_PIN, LOGIC_LOW);
+	}
+}

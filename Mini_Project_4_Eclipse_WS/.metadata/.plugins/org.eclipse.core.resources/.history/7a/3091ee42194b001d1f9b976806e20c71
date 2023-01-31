@@ -1,0 +1,19 @@
+/*
+ * Application.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+#include "lcd.h"
+#include "ultrasonic.h"
+#include <util/delay.h>
+
+
+int main(void){
+	GPIO_setupPinDirection(PORTC_ID, PIN0_ID, PIN_OUTPUT);
+	GPIO_writePin(PORTC_ID, PIN0_ID, LOGIC_LOW);
+	Ultrasonic_init();
+	while (1){
+		uint16 d = Ultrasonic_readDistance;
+	}
+}

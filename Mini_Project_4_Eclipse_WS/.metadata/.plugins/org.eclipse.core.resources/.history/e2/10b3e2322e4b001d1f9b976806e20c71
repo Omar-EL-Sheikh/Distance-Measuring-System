@@ -1,0 +1,26 @@
+/*
+ * Application.c
+ *
+ *  Created on: Oct 12, 2022
+ *      Author: Omar EL-Sheikh
+ */
+#include "lcd.h"
+#include "ultrasonic.h"
+
+
+
+
+
+
+int main(void){
+	//Icu_ConfigType ICU_Configs = {F_CPU_8, RISING};
+	Ultrasonic_init();
+	LCD_init();
+	uint16 d;
+	while (1){
+		d = Ultrasonic_readDistance();
+		//_delay_ms(10);
+		LCD_intgerToString(d);
+		LCD_clearScreen();
+	}
+}
