@@ -1,4 +1,5 @@
 # Distance-Measuring-System
+![Screenshot (521)](https://user-images.githubusercontent.com/79065694/215884456-348176c2-8a7a-4080-b058-2a5589a7accc.png)
 Description:
 A distance measuring system using Ultrasonic sensor on ATmega16 microcontroller.
 The system uses HCSR04 Ultrasonic distance to measure the distance of an opposing object.
